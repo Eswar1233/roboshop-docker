@@ -11,11 +11,13 @@ volumes:
 services:
   mongodb:
     image: eswarteja123/mongodb:v1
+    build: ./mongodb
     container_name: mongodb
     volumes:
     - mongodb:/data/db
   catalogue:
     image: eswarteja123/catalogue:v1
+    build: ./catalogue
     container_name: catalogue
     depends_on:
     - mongodb
@@ -26,29 +28,34 @@ services:
     - redis:/data
   user:
     image: eswarteja123/user:v1
+    build: ./user
     container_name: user
     depends_on:
     - redis
     - mongodb
   cart:
     image: eswarteja123/cart:v1
+    build: ./cart
     container_name: cart
     depends_on:
     - catalogue
     - redis
   mysql:
     image: eswarteja123/mysql:v1
+    build: ./mysql
     container_name: mysql
     volumes:
     - mysql:/var/lib/mysql
   shipping:
     image: eswarteja123/shipping:v1
+    build: ./shipping
     container_name: shipping
     depends_on:
     - mysql
     - cart
   rabbitmq:
     image: rabbitmq:3
+    build: ./rabbitmq
     container_name: rabbitmq
     environment:
       RABBITMQ_DEFAULT_USER: roboshop
@@ -57,6 +64,7 @@ services:
     - rabbitmq:/var/lib/rabbitmq
   payment:
     image: eswarteja123/payment:v1
+    build: ./payment
     container_name: payment
     environment: 
       CART_HOST: cart
@@ -72,6 +80,7 @@ services:
     - user
   frontend: 
     image: eswarteja123/frontend:v1
+    build: ./frontend
     container_name: frontend
     ports:
     - "80:80"
