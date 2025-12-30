@@ -55,7 +55,6 @@ services:
     - cart
   rabbitmq:
     image: rabbitmq:3
-    build: ./rabbitmq
     container_name: rabbitmq
     environment:
       RABBITMQ_DEFAULT_USER: roboshop
